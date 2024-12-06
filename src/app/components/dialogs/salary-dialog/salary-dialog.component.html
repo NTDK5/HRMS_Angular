@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{isEdit ? 'Edit' : 'Add'}} Salary</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Employee</mat-label>
+      <mat-select formControlName="employeeId">
+        <mat-option *ngFor="let employee of employees" [value]="employee.id">
+          {{employee.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" formControlName="amount">
+      <span matPrefix>$&nbsp;</span>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Payment Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="paymentDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!form.valid">
+    {{isEdit ? 'Update' : 'Add'}}
+  </button>
+</mat-dialog-actions> 

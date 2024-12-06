@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>{{isEdit ? 'Edit' : 'Add'}} Employee</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Company</mat-label>
+      <mat-select formControlName="companyId" (selectionChange)="onCompanyChange($event.value)">
+        <mat-option *ngFor="let company of companies" [value]="company.id">
+          {{company.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Department</mat-label>
+      <mat-select formControlName="departmentId" [disabled]="!form.get('companyId')?.value">
+        <mat-option *ngFor="let department of departments" [value]="department.id">
+          {{department.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!form.valid">
+    {{isEdit ? 'Update' : 'Add'}}
+  </button>
+</mat-dialog-actions> 
